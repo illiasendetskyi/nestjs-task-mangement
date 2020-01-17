@@ -8,6 +8,8 @@ async function bootstrap(): Promise<void> {
   const logger = new Logger('bootstrap');
   const app = await NestFactory.create(AppModule);
 
+  if (process.env.NODE_ENV === 'development') app.enableCors();
+
   const port = process.env.PORT || serverConfig.port;
   await app.listen(port);
   logger.log(`Apllication is listetning on port ${port}`);
