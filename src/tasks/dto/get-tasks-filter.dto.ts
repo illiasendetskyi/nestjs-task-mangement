@@ -9,5 +9,4 @@ export class GetTasksFilterDto {
   @IsOptional()
   @IsNotEmpty()
   search: string;
-
 }
