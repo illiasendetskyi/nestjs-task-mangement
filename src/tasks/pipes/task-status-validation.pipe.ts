@@ -15,4 +15,5 @@ export class TaskStatusValidationPipe implements PipeTransform {
     const idx = this.allowedStatuses.indexOf(value);
     return idx !== -1;
   }
+
 }
