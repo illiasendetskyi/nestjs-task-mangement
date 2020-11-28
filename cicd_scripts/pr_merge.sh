@@ -1,8 +1,5 @@
 #!/bin/bash
 
-CODEBUILD_WEBHOOK_HEAD_REF='refs/heads/test-branch4'
-DOMAIN_NAME='azarus.io'
-
 branch="$(cut -d'/' -f3 <<<${CODEBUILD_WEBHOOK_HEAD_REF})"
 stackName="${branch}-showcase-ci-cd-stack"
 fullDomainName="${branch}-showcase.${DOMAIN_NAME}"
