@@ -4,8 +4,10 @@ branch="$(cut -d'/' -f3 <<<${CODEBUILD_WEBHOOK_HEAD_REF})"
 stackName="${branch}-showcase-ci-cd-stack"
 fullDomainName="${branch}-showcase.${DOMAIN_NAME}"
 bucketName=$fullDomainName
+templateBodPath="file://$CODEBUILD_SRC_DIR/cicd_scripts/cf-stack.yml"
+echo "VARS. stackName: $stackName, fullDomainName: $fullDomainName, bucketName: $bucketName, templateBodPath: $templateBodPath"
 
-aws cloudformation create-stack --stack-name "${stackName}" --template-body ./cf-stack.yml --parameters ParameterKey=DomainName,ParameterValue="${DOMAIN_NAME}" ParameterKey=FullDomainName,ParameterValue="${fullDomainName}" ParameterKey=AcmCertificateArn,ParameterValue="${ACM_CERTIFICATE_ARN}" --notification-arns "${SNS_ARN}"
+aws cloudformation create-stack --stack-name "${stackName}" --template-body "${templateBodPath}" --parameters ParameterKey=DomainName,ParameterValue="${DOMAIN_NAME}" ParameterKey=FullDomainName,ParameterValue="${fullDomainName}" ParameterKey=AcmCertificateArn,ParameterValue="${ACM_CERTIFICATE_ARN}" --notification-arns "${SNS_ARN}"
 
 npm install
 
@@ -24,12 +26,6 @@ do
     sleep 5
   fi
   i=$(( $i + 1 ))
-
-  if [ "$i" > 500 ]
-  then
-    echo "Unable to receive bucketResource"
-    exit 1
-  fi
 done
 
 echo "Bucket resource received:"
