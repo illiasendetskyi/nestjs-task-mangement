@@ -11,7 +11,7 @@ echo $snsMessage
 aws sns publish --topic-arn $SNS_ARN --message "$snsMessage"
 
 echo "Sync a bucket: $bucketName"
-aws s3 sync ../dist-test s3://$bucketName
+aws s3 sync "$CODEBUILD_SRC_DIR/dist-test" s3://$bucketName
 
 echo "Getting cloudfront resource from cloudformation, stack: $stackName, logical resource id: $stackLogicalResourceId"
 

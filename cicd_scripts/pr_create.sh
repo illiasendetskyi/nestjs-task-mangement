@@ -32,6 +32,6 @@ echo "Bucket resource received:"
 echo $bucketResource
 echo "Bucket name: $bucketName"
 
-aws s3 sync ../dist-test s3://$bucketName
+aws s3 sync "$CODEBUILD_SRC_DIR/dist-test" s3://$bucketName
 
 echo "done"
